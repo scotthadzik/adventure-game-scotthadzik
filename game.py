@@ -8,27 +8,64 @@ This is a text-based adventure game where the player makes choices
 to navigate through a mysterious forest.
 '''
 
-# Welcome message and introduction
-print("Welcome to the Adventure Game!")  
-print('Your journey begins here... ')
+#----------------------
+# Global inventory list
+# This will hold items the player collects
+#----------------------
+inventory = []
 
-# Ask for the player's name
-player_name = input("What is your name, adventurer? ")
+#----------------
+# Function: welcome_player
+# Greets the player, asks for their name,
+# and returns the name as a string
+#----------------
+def welcome_player():
+    # Welcome message and introduction
+    print("Welcome to the Adventure Game!")  
+    print('Your journey begins here... ')
 
-# Concatenate strings to create a personalized message
-print("Welcome, " + player_name + "! Your journey begins now.")
+    # Ask for the player's name
+    player_name = input("What is your name, adventurer? ")
 
-# Use an f-string to display the same message in a more readable way
-print(f"Welcome, {player_name}! Your journey begins now.")
+    # Use an f-string to display the same message in a more readable way
+    print(f"Welcome, {player_name}! Your journey begins now.")
 
-# Describe the starting area
-starting_area = """
-You find yourself in a dark forest
-The sound of rustling leaves fills the air
-A faint path lies ahead, leading deeper into the
-unknown... 
-"""
-print(starting_area)
+    return player_name
+
+#----------------
+# Function: describe_area
+# Print the opening description of the area
+#----------------
+def describe_area():
+    # Describe the starting area
+    print( """
+    You find yourself in a dark forest
+    The sound of rustling leaves fills the air
+    A faint path lies ahead, leading deeper into the
+    unknown... """)
+
+#----------------
+# Function: add_to_inventory
+# Accepts an item name as a parameter,
+# adds it to the inventory list,
+# and confirm the pickup to the player
+#----------------
+def add_to_inventory(item):
+    inventory.append(item)
+    print(f"You picked up a {item}!")
+
+#-----------------
+# Game starts here
+# Call the welcome and describe area functions
+#-----------------
+
+player_name = welcome_player()
+describe_area()
+
+#-----------------
+# Main game loop
+# run this until the player quiescent
+#-----------------
 
 # Start the game Loop
 while True:
@@ -36,16 +73,24 @@ while True:
     print("\t1. Take the left path into the dark woods.")
     print("\t2. Take the right path toward the mountain pass.")
     print("\t3. Stay where you are.")
+    print("\tType 'i' to view your inventory.")
 
-    decision = input("What will you do (1,2,3): ")
+    decision = input("What will you do (1,2,3 or i): ").lower()
+
+    if decision == 'i':
+        print("Inventory", inventory)
+        continue
 
     if decision == "1":
         print(f"{player_name}, you step into the dark woods."
               "The trees whisper as walk deeper.")
+        add_to_inventory("lantern")
     elif decision == "2":
         print(f"{player_name}, you make your way "
               "towards the mountain pass, feeling "
               "the cold wind against your face.")
+        add_to_inventory("map")
+        
     elif decision == "3":
         print("You stay still, listening to the " 
               "distant sounds of the forest")
