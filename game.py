@@ -8,51 +8,31 @@ This is a text-based adventure game where the player makes choices
 to navigate through a mysterious forest.
 '''
 
-TODOs
+#------------------------
+# Player class to store player info and game state
+#------------------------
+class Player:
+    # initializer - constructor
+    def __init__(self, name):
+        self.name = name
+        self.inventory = []
+        self.health = 100
+        self.has_map = False
+        self.has_lantern = False
 
-# TODO: Create a class called Player to represent the player in the game
-
-# TODO: Inside the Player class, define an __init__ method that:
-#       - Takes a name parameter
-#       - Initializes these attributes:
-#         - self.name (string)
-#         - self.inventory (empty list)
-#         - self.health (set to 100)
-#         - self.has_map (set to False)
-#         - self.has_lantern (set to False)
-
-# TODO: Replace the global variable player_name with a Player object
-#       Example: player = Player("Scott")
-
-# TODO: Update your welcome_player() function to return a Player object
-#       Instead of returning just a name, create and return the Player
-
-# TODO: Update add_to_inventory() so it:
-#       - Accepts a Player object as a parameter
-#       - Appends the item to player.inventory
-#       - Prints a message confirming the item was picked up
-
-# TODO: In path 1, after picking up the lantern:
-#       - Set player.has_lantern = True
-
-# TODO: In path 2, after picking up the map:
-#       - Set player.has_map = True
-
-# TODO: (Optional Stretch) Add a check before certain choices
-#       - Example: If player.has_lantern is False, prevent entering a cave
-#       - Print a message like “It’s too dark to continue without a lantern.”
-
-# TODO: Update all print statements that used player_name to use player.name
-
-# TODO: Commit and push your code with a message like:
-#       REF player class added and game state flags implemented
-
-
-#----------------------
-# Global inventory list
-# This will hold items the player collects
-#----------------------
-inventory = []
+# TODO:  Add a check before certain choices
+#       - Change 
+#           - 3. Stay where you are. 
+#           to
+#           - 4. Stay where you are.
+#       - Create a new option  
+#           - 3. Enter the Cave 
+#       - Update 
+#           - You see two paths ahead:
+#           - There are multiple paths ahead:
+#       - If player.has_lantern is False, prevent entering a cave
+#       - Print a message  
+#           - “It’s too dark to continue without a lantern.”
 
 #----------------
 # Function: welcome_player
@@ -65,12 +45,13 @@ def welcome_player():
     print('Your journey begins here... ')
 
     # Ask for the player's name
-    player_name = input("What is your name, adventurer? ")
+    name = input("What is your name, adventurer? ")
+    player = Player(name)
 
     # Use an f-string to display the same message in a more readable way
-    print(f"Welcome, {player_name}! Your journey begins now.")
+    print(f"Welcome, {player.name}! Your journey begins now.")
 
-    return player_name
+    return player
 
 #----------------
 # Function: describe_area
@@ -91,7 +72,7 @@ def describe_area():
 # and confirm the pickup to the player
 #----------------
 def add_to_inventory(item):
-    inventory.append(item)
+    player.inventory.append(item)
     print(f"You picked up a {item}!")
 
 #-----------------
@@ -99,7 +80,7 @@ def add_to_inventory(item):
 # Call the welcome and describe area functions
 #-----------------
 
-player_name = welcome_player()
+player = welcome_player()
 describe_area()
 
 #-----------------
@@ -118,18 +99,21 @@ while True:
     decision = input("What will you do (1,2,3 or i): ").lower()
 
     if decision == 'i':
-        print("Inventory", inventory)
+        print("Inventory", player.inventory)
         continue
 
     if decision == "1":
-        print(f"{player_name}, you step into the dark woods."
+        print(f"{player.name}, you step into the dark woods."
               "The trees whisper as walk deeper.")
         add_to_inventory("lantern")
+        player.has_lantern = True
+
     elif decision == "2":
-        print(f"{player_name}, you make your way "
+        print(f"{player.name}, you make your way "
               "towards the mountain pass, feeling "
               "the cold wind against your face.")
         add_to_inventory("map")
+        player.has_map = True
         
     elif decision == "3":
         print("You stay still, listening to the " 
@@ -142,7 +126,7 @@ while True:
     play_again = input("Do you want to continue "
                        "exploring? (yes or no): ").lower()
     if play_again != "yes":
-        print(f"Thanks for playing, {player_name} "
+        print(f"Thanks for playing, {player.name} "
               "See you next time.")
         break # Exit the loop and end the game
     
