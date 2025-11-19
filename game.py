@@ -36,16 +36,6 @@ def add_to_inventory(item, player):        # - Takes an item (string) as a param
     player.inventory.append(item)         # - Adds the item to the inventory list
     print("You picked up", item)   # - Prints a message saying the item was picked up
 
-
-# TODO: (Optional Stretch) Add a check before certain choices
-#       - Example: If player.has_lantern is False, prevent entering a cave
-#       - Print a message like “It’s too dark to continue without a lantern.”
-
-# TODO: Update all print statements that used player_name to use player.name
-
-# TODO: Commit and push your code with a message like:
-#       REF player class added and game state flags implemented
-
 player1 = welcome_player() #return a player object
 
 describe_area()
@@ -54,7 +44,9 @@ while (True):
     # Ask the player for their first decision
     decision = input("\t1. Take the left path into the dark woods\n "
                     "\t2. Take the right path towards the mountain pass\n"
-                    "\t3. Stay where you are\n"
+                    "\t3. Go into a nearby Cave\n"
+                    "\t4. Explore the Hidden Valley\n"
+                    "\t5. Stay where you are\n"
                     "\tType 'i' to view your inventory ").lower()
 
     # conditional evaluate
@@ -69,8 +61,24 @@ while (True):
         add_to_inventory("map", player1)
         player1.has_map = True
     elif decision == "3":
+        #conditional to determine if they have the lantern
+        # if they have the lantern tell them about the cave and give them the treasure
+        if player1.has_lantern == True:
+            print("You go into the dark cave")
+            add_to_inventory("Treasure", player1)
+        else:
+            print("It's too dark in the cave. Try to find something to illuminate your way")
+    elif decision == "4":
+        if player1.has_map: # if True  or if False
+            print("You go into the Hidden Valley with a bowl of salad")
+            add_to_inventory("Rare Herbs", player1)
+        else:
+            print("You can't find the valley without directions")
+    elif decision == "5":
         print("Confused, you stand still, unsure of what to do.")
     elif decision == "i":
         print (player1.inventory)
     else:
         print("That is not a valid choice")
+
+
