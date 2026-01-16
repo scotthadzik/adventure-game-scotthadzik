@@ -5,5 +5,5 @@ This is the starter code that we will be using to learn python, git, and vscode
 
 ## This is a text based adventure game
 
-## This is modified on another machine
+## This is modified on another machine robot
  
