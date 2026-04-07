@@ -2,9 +2,28 @@
 class Player:
     
     # initializer constructor
-    def __init__(self, name): # must use self some use this
-        self.name = name
+    def __init__(self): # must use self some use this
+        self.name = ""
         self.inventory = []
         self.health = 100
-        self.has_map = False
-        self.has_lantern = False
+
+    #setter
+    def set_name(self, name):
+        # encapsulation allow us to evaluate 
+        # what the user puts in for name
+        if name == "":
+            self.name = "Default Name"
+        else:
+            self.name = name
+    def ask_player_name(self):
+        self.set_name(input("What is your name, adventurer? "))
+    
+    def add_to_inventory(self, item):
+        self.inventory.append(item)
+        print(f"{item} was added to your inventory")
+
+    def is_item_in_inventory(self, item):
+        if item in self.inventory:
+            # yes it's in the inventory
+            return True
+        return False
