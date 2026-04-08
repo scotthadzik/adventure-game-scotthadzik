@@ -27,3 +27,10 @@ class Player:
             # yes it's in the inventory
             return True
         return False
+    
+    def get_player_health(self):
+        print(f"{self.name} your health is {self.health}")
+
+    def take_damage(self, damage_amount):
+        self.health -= damage_amount # health = health - 10 ++ --
+        self.get_player_health()
